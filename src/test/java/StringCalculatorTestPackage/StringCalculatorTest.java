@@ -55,4 +55,9 @@ public class StringCalculatorTest {
     public void NewLineInNumbers2(){
         Assert.assertEquals(StringCalculator.Add("1\n2\n3"), 6);
     }
+
+    @Test(priority=700)
+    public void NoSeparatorAtTheEndExceptionTest(){
+        Exception except = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,2,"));
+    }
 }
