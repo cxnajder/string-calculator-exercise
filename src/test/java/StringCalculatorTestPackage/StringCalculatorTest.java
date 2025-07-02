@@ -45,4 +45,9 @@ public class StringCalculatorTest {
         numbers += "1";
         Assert.assertEquals(StringCalculator.Add(numbers), randomNumber);
     }
+
+    @Test(priority=600)
+    public void NewLineInNumbers(){
+        Assert.assertEquals(StringCalculator.Add("1,2\n3"), 6);
+    }
 }
