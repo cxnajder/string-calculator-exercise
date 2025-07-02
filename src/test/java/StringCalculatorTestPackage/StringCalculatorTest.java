@@ -90,4 +90,16 @@ public class StringCalculatorTest {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("//|\n1|2,3"));
         Assert.assertEquals(exception.getMessage(), "'|' expected but ',' found at position 3.");
     }
+
+    @Test(priority=900)
+    public void negativeNumbersException1(){
+        Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,-2"));
+        Assert.assertEquals(exception.getMessage(), "Negative number(s) not allowed: -2");
+    }
+
+    @Test(priority=920)
+    public void negativeNumbersException2(){
+        Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("2,-4,-9"));
+        Assert.assertEquals(exception.getMessage(), "Negative number(s) not allowed: -4, -9");
+    }
 }
