@@ -80,14 +80,14 @@ public class StringCalculatorTest {
     }
 
     @Test(priority=700)
-    public void NoSeparatorAtTheEndExceptionTest(){
+    public void NoDelimiterAtTheEndExceptionTest(){
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,2,"));
     }
 
     @Test(priority=720)
-    public void NoSeparatorAtTheEndExceptionWithMessage(){
+    public void NoDelimiterAtTheEndExceptionWithMessage(){
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,2,"));
-        Assert.assertEquals(exception.getMessage(), "No separator at the end allowed");
+        Assert.assertEquals(exception.getMessage(), "No delimiter at the end allowed.");
     }
 
     @Test(priority=800)

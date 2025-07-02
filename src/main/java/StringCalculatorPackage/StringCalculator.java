@@ -2,39 +2,39 @@ package StringCalculatorPackage;
 
 public class StringCalculator {
 
-    static final String delimiterStartSign = "//";
-    static final char delimiterEndSign = '\n';
+    static final String customDelimiterStartSign = "//";
+    static final char customDelimiterEndSign = '\n';
     public static int Add(String numbers) throws Exception{
         if (numbers.isEmpty()){
             return 0;
         }
-        String[] separators = {",", "\n"};
+        String[] delimiters = {",", "\n"};
 
-        String customDelimiter = checkCustomDelimiter(numbers);
-        if (!customDelimiter.isEmpty()) {
-            separators[0] = customDelimiter;
-            numbers = numbers.substring(numbers.indexOf(delimiterEndSign)+1);
+        String customCustomDelimiter = checkCustomCustomDelimiter(numbers);
+        if (!customCustomDelimiter.isEmpty()) {
+            delimiters[0] = customCustomDelimiter;
+            numbers = numbers.substring(numbers.indexOf(customDelimiterEndSign)+1);
         }
 
-        if (separatorAtTheEnd(numbers, separators))
-            throw new Exception("No separator at the end allowed");
+        if (delimiterAtTheEnd(numbers, delimiters))
+            throw new Exception("No delimiter at the end allowed.");
 
-        int index = indexOfNextNumber(numbers, separators);
+        int indexOfNextNumber = getIndexOfNextNumber(numbers, delimiters);
         int sum = 0;
-        while (index > 0) {
-            sum += Integer.parseInt(numbers.substring(0, index));
-            numbers = numbers.substring(index+1);
-            index = indexOfNextNumber(numbers, separators);
+        while (indexOfNextNumber > 0) {
+            sum += Integer.parseInt(numbers.substring(0, indexOfNextNumber));
+            numbers = numbers.substring(indexOfNextNumber+1);
+            indexOfNextNumber = getIndexOfNextNumber(numbers, delimiters);
         }
         sum += Integer.parseInt(numbers);
 
         return sum;
     }
 
-    private static int indexOfNextNumber(String numbers, String[] separators){
+    private static int getIndexOfNextNumber(String numbers, String[] delimiters){
         int index = -1;
-        for (String separator : separators) {
-            int foundIndex = numbers.indexOf(separator);
+        for (String delimiter : delimiters) {
+            int foundIndex = numbers.indexOf(delimiter);
             if (foundIndex >= 0) {
                 if ((index < 0)||(index > foundIndex))
                     index = foundIndex;
@@ -43,24 +43,24 @@ public class StringCalculator {
         return index;
     }
 
-    private static boolean separatorAtTheEnd(String numbers, String[] separators) {
+    private static boolean delimiterAtTheEnd(String numbers, String[] delimiters) {
         String endString = "";
-        for (String separator : separators) {
-            if (endString.length() != separator.length())
-                endString = numbers.substring(numbers.length()-separator.length());
-            if (endString.equals(separator))
+        for (String delimiter : delimiters) {
+            if (endString.length() != delimiter.length())
+                endString = numbers.substring(numbers.length()-delimiter.length());
+            if (endString.equals(delimiter))
                 return true;
         }
         return false;
     }
 
-    private static String checkCustomDelimiter(String numbers){
-        if (numbers.length() < delimiterStartSign.length())
+    private static String checkCustomCustomDelimiter(String numbers){
+        if (numbers.length() < customDelimiterStartSign.length())
             return "";
-        if (!numbers.startsWith(delimiterStartSign)){
+        if (!numbers.startsWith(customDelimiterStartSign)){
             return "";
         }
-        int indexOfDelimiterEnd = numbers.indexOf(delimiterEndSign);
-        return numbers.substring(delimiterStartSign.length(), indexOfDelimiterEnd);
+        int indexOfCustomDelimiterEnd = numbers.indexOf(customDelimiterEndSign);
+        return numbers.substring(customDelimiterStartSign.length(), indexOfCustomDelimiterEnd);
     }
 }
