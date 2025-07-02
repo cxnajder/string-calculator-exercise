@@ -15,8 +15,8 @@ public class StringCalculator {
             numbers = removeCustomDelimiterPrefix(numbers);
         }
 
-        if (delimiterAtTheEnd(numbers, delimiter))
-            throw new Exception("No delimiter at the end allowed.");
+        checkDelimiterAtTheEnd(numbers, delimiter);
+
 
         numbers = replaceNewLineWithDelimiters(numbers, delimiter);
 
@@ -45,9 +45,10 @@ public class StringCalculator {
         return number;
     }
 
-    private static boolean delimiterAtTheEnd(String numbers, String delimiter) {
+    private static void checkDelimiterAtTheEnd(String numbers, String delimiter) throws Exception {
         String endString = numbers.substring(numbers.length()-delimiter.length());
-        return endString.equals(delimiter);
+        if (endString.equals(delimiter))
+            throw new Exception("No delimiter at the end allowed.");
     }
 
     private static String checkCustomDelimiter(String numbers){
