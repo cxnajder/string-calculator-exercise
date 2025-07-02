@@ -4,7 +4,7 @@ public class StringCalculator {
 
     static final String customDelimiterStartSign = "//";
     static final char customDelimiterEndSign = '\n';
-    public static int Add(String numbers) throws Exception{
+    public static int Add(String numbers) throws Exception {
         if (numbers.isEmpty()){
             return 0;
         }
@@ -22,15 +22,29 @@ public class StringCalculator {
         numbers = replaceNewLineWithDelimiter(numbers, delimiter);
 
         int indexOfNextDelimiter = numbers.indexOf(delimiter);
+        int erasedCharacter = 0;
         int sum = 0;
         while (indexOfNextDelimiter > 0) {
-            sum += Integer.parseInt(numbers.substring(0, indexOfNextDelimiter));
+            sum += getIntFromNumbers(numbers, indexOfNextDelimiter, delimiter, erasedCharacter);
             numbers = numbers.substring(indexOfNextDelimiter + delimiter.length());
+            erasedCharacter += indexOfNextDelimiter + delimiter.length();
             indexOfNextDelimiter = numbers.indexOf(delimiter);
         }
-        sum += Integer.parseInt(numbers);
+        sum += getIntFromNumbers(numbers, numbers.length(), delimiter, erasedCharacter);
 
         return sum;
+    }
+    private static Integer getIntFromNumbers(String numbers, int indexOfNextDelimiter, String delimiter, int erasedCharacter) throws Exception {
+        int number = 0;
+        try {
+            number = Integer.parseInt(numbers.substring(0, indexOfNextDelimiter));
+        } catch (NumberFormatException e) {
+            for (int i=0; i < numbers.length(); ++i){
+                if (!Character.isDigit(numbers.charAt(i)))
+                    throw new Exception(String.format("'%s' expected but '%c' found at position %d.", delimiter, numbers.charAt(i), i+erasedCharacter));
+            }
+        }
+        return number;
     }
 
     private static boolean delimiterAtTheEnd(String numbers, String delimiter) {
