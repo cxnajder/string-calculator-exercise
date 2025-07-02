@@ -9,74 +9,49 @@ import java.util.Random;
 
 public class StringCalculatorTest {
     @Test(priority=100)
-    public void EmptyString(){
-        try {
-            Assert.assertEquals(StringCalculator.Add(""), 0);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+    public void EmptyString() throws Exception {
+        Assert.assertEquals(StringCalculator.Add(""), 0);
     }
     @Test(priority=200)
-    public void OneNumber(){
-        try {
-            Assert.assertEquals(StringCalculator.Add("1"), 1);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+    public void OneNumber() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("1"), 1);
     }
     @Test(priority=300)
-    public void TwoNumbers(){
-        try {
-            Assert.assertEquals(StringCalculator.Add("1,2"), 3);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+    public void TwoNumbers() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("1,2"), 3);
     }
-
+    @Test(priority=350)
+    public void ThreeNumbers() throws Exception{
+        Assert.assertEquals(StringCalculator.Add("1,2,3"), 6);
+    }
     @Test(priority=400)
-    public void AddOneNinetyNineTimes(){
+    public void AddOneNinetyNineTimes() throws Exception {
         StringBuilder numbers = new StringBuilder();
         int ninetyNine = 99;
         numbers.append("1,".repeat(ninetyNine - 1));
         numbers.append("1");
-        try {
-            Assert.assertEquals(StringCalculator.Add(numbers.toString()), ninetyNine);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+        Assert.assertEquals(StringCalculator.Add(numbers.toString()), ninetyNine);
     }
 
     @Test(priority=500)
-    public void AddOneRandomTimes(){
+    public void AddOneRandomTimes() throws Exception {
         StringBuilder numbers = new StringBuilder();
         Random random = new Random();
         int randomNumber = random.nextInt(100)+1;
         numbers.append("1,".repeat(randomNumber - 1));
         numbers.append("1");
-        try {
-            Assert.assertEquals(StringCalculator.Add(numbers.toString()), randomNumber);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+        Assert.assertEquals(StringCalculator.Add(numbers.toString()), randomNumber);
     }
 
     @Test(priority=600)
-    public void NewLineInNumbers(){
-        try {
-            Assert.assertEquals(StringCalculator.Add("1,2\n3"), 6);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+    public void NewLineInNumbers() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("1,2\n3"), 6);
     }
 
 
     @Test(priority=650)
-    public void NewLineInNumbers2(){
-        try {
-            Assert.assertEquals(StringCalculator.Add("1\n2\n3"), 6);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+    public void NewLineInNumbers2() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("1\n2\n3"), 6);
     }
 
     @Test(priority=700)
@@ -91,30 +66,18 @@ public class StringCalculatorTest {
     }
 
     @Test(priority=800)
-    public void handleDifferentDelimiter1(){
-        try {
-            Assert.assertEquals(StringCalculator.Add("//;\n1;3"), 4);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+    public void handleDifferentDelimiter1() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("//;\n1;3"), 4);
     }
 
     @Test(priority=820)
-    public void handleDifferentDelimiter2(){
-        try {
-            Assert.assertEquals(StringCalculator.Add("//|\n1|2|3"), 6);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+    public void handleDifferentDelimiter2() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("//|\n1|2|3"), 6);
     }
 
     @Test(priority=840)
-    public void handleDifferentDelimiter3(){
-        try {
-            Assert.assertEquals(StringCalculator.Add("//sep\n2sep5"), 7);
-        } catch (Exception e) {
-            Assert.fail();
-        }
+    public void handleDifferentDelimiter3() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("//sep\n2sep5"), 7);
     }
 
     @Test(priority=860)
