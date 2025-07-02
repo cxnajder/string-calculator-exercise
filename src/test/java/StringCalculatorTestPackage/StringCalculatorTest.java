@@ -93,7 +93,7 @@ public class StringCalculatorTest {
     @Test(priority=800)
     public void handleDifferentDelimiter1(){
         try {
-            Assert.assertEquals(StringCalculator.Add("//;\\n1;3"), 4);
+            Assert.assertEquals(StringCalculator.Add("//;\n1;3"), 4);
         } catch (Exception e) {
             Assert.fail();
         }
@@ -102,7 +102,7 @@ public class StringCalculatorTest {
     @Test(priority=820)
     public void handleDifferentDelimiter2(){
         try {
-            Assert.assertEquals(StringCalculator.Add("//|\\n1|2|3"), 6);
+            Assert.assertEquals(StringCalculator.Add("//|\n1|2|3"), 6);
         } catch (Exception e) {
             Assert.fail();
         }
@@ -111,7 +111,7 @@ public class StringCalculatorTest {
     @Test(priority=840)
     public void handleDifferentDelimiter3(){
         try {
-            Assert.assertEquals(StringCalculator.Add("//sep\\n2sep5"), 7);
+            Assert.assertEquals(StringCalculator.Add("//sep\n2sep5"), 7);
         } catch (Exception e) {
             Assert.fail();
         }
