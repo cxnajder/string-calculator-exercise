@@ -52,10 +52,10 @@ public class StringCalculator {
                 }
                 nums.add(Integer.parseInt(sb.toString()));
                 sb = new StringBuilder();
-                if (currentIndex != delimiterIndex) {
+                if (currentIndex < input.length() && currentIndex != delimiterIndex) {
                     // There is an incorrect delimiter
-                    int incorrectDelimiterIndex = currentIndex;
                     String incorrectDelimiter = getDelimiter(input, currentIndex);
+                    errors.add(String.format("'%s' expected but '%s' found at position %d.", delimiter, incorrectDelimiter, currentIndex));
                     currentIndex += incorrectDelimiter.length();
                 }
                 else{
