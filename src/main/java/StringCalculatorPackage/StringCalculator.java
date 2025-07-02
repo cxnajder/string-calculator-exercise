@@ -1,11 +1,20 @@
 package StringCalculatorPackage;
 
 public class StringCalculator {
+
+    static final String delimiterStartSign = "//";
+    static final char delimiterEndSign = '\n';
     public static int Add(String numbers) throws Exception{
         if (numbers.isEmpty()){
             return 0;
         }
         String[] separators = {",", "\n"};
+
+        String customDelimiter = checkCustomDelimiter(numbers);
+        if (!customDelimiter.isEmpty()) {
+            separators[0] = customDelimiter;
+            numbers = numbers.substring(numbers.indexOf(delimiterEndSign)+1);
+        }
 
         if (separatorAtTheEnd(numbers, separators))
             throw new Exception("No separator at the end allowed");
@@ -43,5 +52,15 @@ public class StringCalculator {
                 return true;
         }
         return false;
+    }
+
+    private static String checkCustomDelimiter(String numbers){
+        if (numbers.length() < delimiterStartSign.length())
+            return "";
+        if (!numbers.startsWith(delimiterStartSign)){
+            return "";
+        }
+        int indexOfDelimiterEnd = numbers.indexOf(delimiterEndSign);
+        return numbers.substring(delimiterStartSign.length(), indexOfDelimiterEnd);
     }
 }
