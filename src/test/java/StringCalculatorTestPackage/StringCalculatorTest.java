@@ -10,15 +10,21 @@ import java.util.Random;
 public class StringCalculatorTest {
     @Test(priority=100)
     public void EmptyString(){
-        Assert.assertEquals(StringCalculator.Add(""), 0);
+        try {
+            Assert.assertEquals(StringCalculator.Add(""), 0);
+        } catch (Exception e) {Assert.fail();}
     }
     @Test(priority=200)
     public void OneNumber(){
-        Assert.assertEquals(StringCalculator.Add("1"), 1);
+        try {
+            Assert.assertEquals(StringCalculator.Add("1"), 1);
+        } catch (Exception e) {Assert.fail();}
     }
     @Test(priority=300)
     public void TwoNumbers(){
-        Assert.assertEquals(StringCalculator.Add("1,2"), 3);
+        try {
+            Assert.assertEquals(StringCalculator.Add("1,2"), 3);
+        } catch (Exception e) {Assert.fail();}
     }
 
     @Test(priority=400)
@@ -30,7 +36,9 @@ public class StringCalculatorTest {
             numbers += "1,";
         }
         numbers += "1";
-        Assert.assertEquals(StringCalculator.Add(numbers), ninetyNine);
+        try {
+            Assert.assertEquals(StringCalculator.Add(numbers), ninetyNine);
+        } catch (Exception e) {Assert.fail();}
     }
 
     @Test(priority=500)
@@ -43,21 +51,34 @@ public class StringCalculatorTest {
             numbers += "1,";
         }
         numbers += "1";
-        Assert.assertEquals(StringCalculator.Add(numbers), randomNumber);
+        try {
+            Assert.assertEquals(StringCalculator.Add(numbers), randomNumber);
+        } catch (Exception e) {Assert.fail();}
     }
 
     @Test(priority=600)
     public void NewLineInNumbers(){
-        Assert.assertEquals(StringCalculator.Add("1,2\n3"), 6);
+        try {
+            Assert.assertEquals(StringCalculator.Add("1,2\n3"), 6);
+        } catch (Exception e) {Assert.fail();}
     }
+
 
     @Test(priority=650)
     public void NewLineInNumbers2(){
-        Assert.assertEquals(StringCalculator.Add("1\n2\n3"), 6);
+        try {
+            Assert.assertEquals(StringCalculator.Add("1\n2\n3"), 6);
+        } catch (Exception e) {Assert.fail();}
     }
 
     @Test(priority=700)
     public void NoSeparatorAtTheEndExceptionTest(){
         Exception except = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,2,"));
+    }
+
+    @Test(priority=720)
+    public void NoSeparatorAtTheEndExceptionWithMessage(){
+        Exception except = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,2,"));
+        Assert.assertEquals(except.getMessage(), "No separator at the end allowed");
     }
 }

@@ -3,11 +3,15 @@ package StringCalculatorPackage;
 import java.util.ArrayList;
 
 public class StringCalculator {
-    public static int Add(String numbers){
+    public static int Add(String numbers) throws Exception{
         if (numbers.isEmpty()){
             return 0;
         }
         String[] separators = {",", "\n"};
+
+        if (separatorAtTheEnd(numbers, separators))
+            throw new Exception("No separator at the end allowed");
+
         int index = indexOfNextNumber(numbers, separators);
         int sum = 0;
         while (index > 0) {
@@ -30,5 +34,16 @@ public class StringCalculator {
             }
         }
         return index;
+    }
+
+    private static boolean separatorAtTheEnd(String numbers, String[] separators) {
+        String endString = "";
+        for (String separator : separators) {
+            if (endString.length() != separator.length())
+                endString = numbers.substring(numbers.length()-separator.length(), numbers.length());
+            if (endString.equals(separator))
+                return true;
+        }
+        return false;
     }
 }
