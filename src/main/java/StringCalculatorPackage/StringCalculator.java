@@ -9,39 +9,37 @@ public class StringCalculator {
             return 0;
         }
         String delimiter = ",";
-
-        String customCustomDelimiter = checkCustomCustomDelimiter(numbers);
-        if (!customCustomDelimiter.isEmpty()) {
-            delimiter = customCustomDelimiter;
-            numbers = numbers.substring(numbers.indexOf(customDelimiterEndSign)+1);
+        String customDelimiter = checkCustomDelimiter(numbers);
+        if (!customDelimiter.isEmpty()) {
+            delimiter = customDelimiter;
+            numbers = removeCustomDelimiterPrefix(numbers);
         }
 
         if (delimiterAtTheEnd(numbers, delimiter))
             throw new Exception("No delimiter at the end allowed.");
 
-        numbers = replaceNewLineWithDelimiter(numbers, delimiter);
+        numbers = replaceNewLineWithDelimiters(numbers, delimiter);
 
+        int indexOfCurrentNumber = 0;
         int indexOfNextDelimiter = numbers.indexOf(delimiter);
-        int erasedCharacter = 0;
         int sum = 0;
         while (indexOfNextDelimiter > 0) {
-            sum += getIntFromNumbers(numbers, indexOfNextDelimiter, delimiter, erasedCharacter);
-            numbers = numbers.substring(indexOfNextDelimiter + delimiter.length());
-            erasedCharacter += indexOfNextDelimiter + delimiter.length();
-            indexOfNextDelimiter = numbers.indexOf(delimiter);
+            sum += getIntFromNumbers(numbers, indexOfCurrentNumber, indexOfNextDelimiter, delimiter);
+            indexOfCurrentNumber = indexOfNextDelimiter + delimiter.length();
+            indexOfNextDelimiter = numbers.indexOf(delimiter, indexOfNextDelimiter + delimiter.length());
         }
-        sum += getIntFromNumbers(numbers, numbers.length(), delimiter, erasedCharacter);
+        sum += getIntFromNumbers(numbers, indexOfCurrentNumber, numbers.length(), delimiter);
 
         return sum;
     }
-    private static Integer getIntFromNumbers(String numbers, int indexOfNextDelimiter, String delimiter, int erasedCharacter) throws Exception {
+    private static Integer getIntFromNumbers(String numbers, int indexOfCurrentNumber, int indexOfNextDelimiter, String delimiter) throws Exception {
         int number = 0;
         try {
-            number = Integer.parseInt(numbers.substring(0, indexOfNextDelimiter));
+            number = Integer.parseInt(numbers.substring(indexOfCurrentNumber, indexOfNextDelimiter));
         } catch (NumberFormatException e) {
-            for (int i=0; i < numbers.length(); ++i){
+            for (int i = indexOfCurrentNumber; i < numbers.length(); ++i){
                 if (!Character.isDigit(numbers.charAt(i)))
-                    throw new Exception(String.format("'%s' expected but '%c' found at position %d.", delimiter, numbers.charAt(i), i+erasedCharacter));
+                    throw new Exception(String.format("'%s' expected but '%c' found at position %d.", delimiter, numbers.charAt(i), i));
             }
         }
         return number;
@@ -52,7 +50,7 @@ public class StringCalculator {
         return endString.equals(delimiter);
     }
 
-    private static String checkCustomCustomDelimiter(String numbers){
+    private static String checkCustomDelimiter(String numbers){
         if (numbers.length() < customDelimiterStartSign.length())
             return "";
         if (!numbers.startsWith(customDelimiterStartSign)){
@@ -62,7 +60,11 @@ public class StringCalculator {
         return numbers.substring(customDelimiterStartSign.length(), indexOfCustomDelimiterEnd);
     }
 
-    private static String replaceNewLineWithDelimiter(String numbers, String delimeter){
+    private static String replaceNewLineWithDelimiters(String numbers, String delimeter){
        return numbers.replace("\n", delimeter);
+    }
+
+    private static String removeCustomDelimiterPrefix(String numbers){
+        return numbers.substring(numbers.indexOf(customDelimiterEndSign) + 1);
     }
 }
