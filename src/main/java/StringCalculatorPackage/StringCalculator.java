@@ -22,32 +22,68 @@ public class StringCalculator {
         int sum = 0;
 
         ArrayList<Integer> nums = new ArrayList<Integer>();
+        ArrayList<Integer> negativeNums = new ArrayList<Integer>();
         StringBuilder sb = new StringBuilder();
         int currentIndex = 0;
+        int delimiterIndex = 0;
+
         while(currentIndex < input.length()) {
-            if(Character.isDigit(input.charAt(currentIndex))){
-                sb.append(input.charAt(currentIndex));
+            delimiterIndex = input.indexOf(delimiter, currentIndex);
+            if (input.charAt(currentIndex) == '-' && delimiterIndex != currentIndex) {
                 ++currentIndex;
-            }else{
-                nums.add(Integer.parseInt(sb.toString()));
-                sb = new StringBuilder();
-                int tempIndex = currentIndex;
-                while(!Character.isDigit(input.charAt(currentIndex))){
+                if (Character.isDigit(input.charAt(currentIndex))) {
+                    // we have a negative number
+                    String Num = getNum(input, currentIndex);
+                    negativeNums.add(Integer.parseInt('-' + Num));
+                    currentIndex += Num.length();
+                } else {
+                    // we have incorrect delimiter
+                    int incorrectDelimiterIndex = currentIndex;
+                    String incorrectDelimiter = getDelimiter(input, currentIndex);
+                    currentIndex += incorrectDelimiter.length();
+                }
+            } else {
+                // We assemby a numer
+                while (currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))) {
                     sb.append(input.charAt(currentIndex));
                     ++currentIndex;
                 }
-                if (!sb.toString().equals(delimiter)) {
-                    throw new Exception(String.format("'%s' expected but '%s' found at position %d.", delimiter, sb.toString(), tempIndex));
-                }
+                nums.add(Integer.parseInt(sb.toString()));
                 sb = new StringBuilder();
+                if (currentIndex != delimiterIndex) {
+                    // There is an incorrect delimiter
+                    int incorrectDelimiterIndex = currentIndex;
+                    String incorrectDelimiter = getDelimiter(input, currentIndex);
+                    currentIndex += incorrectDelimiter.length();
+                }
+                else{
+                    currentIndex += delimiter.length();
+                }
             }
         }
-        nums.add(Integer.parseInt(sb.toString()));
 
         for (int n: nums){
             sum += n;
         }
         return sum;
+    }
+
+    private static String getNum(String input, int currentIndex){
+        StringBuilder sb = new StringBuilder();
+        while(currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))){
+            sb.append(input.charAt(currentIndex));
+            ++currentIndex;
+        }
+        return sb.toString();
+    }
+
+    private static String getDelimiter(String input, int currentIndex){
+        StringBuilder sb = new StringBuilder();
+        while(currentIndex < input.length() && !Character.isDigit(input.charAt(currentIndex))){
+            sb.append(input.charAt(currentIndex));
+            ++currentIndex;
+        }
+        return sb.toString();
     }
 
     private static void checkDelimiterAtTheEnd(String input, String delimiter) throws Exception {
