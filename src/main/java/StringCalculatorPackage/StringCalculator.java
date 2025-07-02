@@ -21,37 +21,21 @@ public class StringCalculator {
 
         numbers = replaceNewLineWithDelimiter(numbers, delimiter);
 
-        int indexOfNextDelimiter = getIndexOfNextDelimiter(numbers, delimiter);
+        int indexOfNextDelimiter = numbers.indexOf(delimiter);
         int sum = 0;
         while (indexOfNextDelimiter > 0) {
             sum += Integer.parseInt(numbers.substring(0, indexOfNextDelimiter));
             numbers = numbers.substring(indexOfNextDelimiter + delimiter.length());
-            indexOfNextDelimiter = getIndexOfNextDelimiter(numbers, delimiter);
+            indexOfNextDelimiter = numbers.indexOf(delimiter);
         }
         sum += Integer.parseInt(numbers);
 
         return sum;
     }
 
-    private static int getIndexOfNextDelimiter(String numbers, String delimiter){
-        int index = -1;
-        int foundIndex = numbers.indexOf(delimiter);
-        if (foundIndex >= 0) {
-            if ((index < 0)||(index > foundIndex))
-                index = foundIndex;
-        }
-
-        return index;
-    }
-
     private static boolean delimiterAtTheEnd(String numbers, String delimiter) {
-        String endString = "";
-        if (endString.length() != delimiter.length())
-            endString = numbers.substring(numbers.length()-delimiter.length());
-        if (endString.equals(delimiter))
-            return true;
-
-        return false;
+        String endString = numbers.substring(numbers.length()-delimiter.length());
+        return endString.equals(delimiter);
     }
 
     private static String checkCustomCustomDelimiter(String numbers){
