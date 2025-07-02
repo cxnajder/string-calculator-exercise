@@ -45,7 +45,7 @@ public class StringCalculator {
                     currentIndex += incorrectDelimiter.length();
                 }
             } else {
-                // We assemby a numer
+                // We assemble a number
                 while (currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))) {
                     sb.append(input.charAt(currentIndex));
                     ++currentIndex;
