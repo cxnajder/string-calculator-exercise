@@ -5,6 +5,8 @@ import StringCalculatorPackage.StringCalculator;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.Random;
+
 public class StringCalculatorTest {
     @Test(priority=100)
     public void EmptyString(){
@@ -17,5 +19,30 @@ public class StringCalculatorTest {
     @Test(priority=300)
     public void TwoNumbers(){
         Assert.assertEquals(StringCalculator.Add("1,2"), 3);
+    }
+
+    @Test(priority=400)
+    public void AddOneNinetyNineTimes(){
+        String numbers = new String("");
+        int ninetyNine = 99;
+        for (int i=1; i < ninetyNine; ++i)
+        {
+            numbers += "1,";
+        }
+        numbers += "1";
+        Assert.assertEquals(StringCalculator.Add(numbers), ninetyNine);
+    }
+
+    @Test(priority=500)
+    public void AddOneRandomTimes(){
+        String numbers = new String("");
+        Random random = new Random();
+        int randomNumber = random.nextInt(100)+1;
+        for (int i=1; i < randomNumber; ++i)
+        {
+            numbers += "1,";
+        }
+        numbers += "1";
+        Assert.assertEquals(StringCalculator.Add(numbers), randomNumber);
     }
 }
