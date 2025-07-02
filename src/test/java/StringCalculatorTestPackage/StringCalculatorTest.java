@@ -50,4 +50,9 @@ public class StringCalculatorTest {
     public void NewLineInNumbers(){
         Assert.assertEquals(StringCalculator.Add("1,2\n3"), 6);
     }
+
+    @Test(priority=650)
+    public void NewLineInNumbers2(){
+        Assert.assertEquals(StringCalculator.Add("1\n2\n3"), 6);
+    }
 }
