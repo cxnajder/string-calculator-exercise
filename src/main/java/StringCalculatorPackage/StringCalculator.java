@@ -16,7 +16,7 @@ public class StringCalculator {
         int sum = 0;
         while (index > 0) {
             sum += Integer.parseInt(numbers.substring(0, index));
-            numbers = numbers.substring(index+1, numbers.length());
+            numbers = numbers.substring(index+1);
             index = indexOfNextNumber(numbers, separators);
         }
         sum += Integer.parseInt(numbers);
@@ -40,7 +40,7 @@ public class StringCalculator {
         String endString = "";
         for (String separator : separators) {
             if (endString.length() != separator.length())
-                endString = numbers.substring(numbers.length()-separator.length(), numbers.length());
+                endString = numbers.substring(numbers.length()-separator.length());
             if (endString.equals(separator))
                 return true;
         }
