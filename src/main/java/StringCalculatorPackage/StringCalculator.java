@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class StringCalculator {
     public static int Add(String numbers){
-        if (numbers.length() == 0){
+        if (numbers.isEmpty()){
             return 0;
         }
         String[] separators = {",", "\n"};
