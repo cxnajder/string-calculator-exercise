@@ -1,6 +1,7 @@
 package StringCalculatorPackage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class StringCalculator {
 
@@ -26,6 +27,7 @@ public class StringCalculator {
         StringBuilder sb = new StringBuilder();
         int currentIndex = 0;
         int delimiterIndex = 0;
+        ArrayList<String> errors = new ArrayList<String>();
 
         while(currentIndex < input.length()) {
             delimiterIndex = input.indexOf(delimiter, currentIndex);
@@ -33,13 +35,13 @@ public class StringCalculator {
                 ++currentIndex;
                 if (Character.isDigit(input.charAt(currentIndex))) {
                     // we have a negative number
-                    String Num = getNum(input, currentIndex);
-                    negativeNums.add(Integer.parseInt('-' + Num));
+                    String Num = '-' + getNum(input, currentIndex);
+                    negativeNums.add(Integer.parseInt(Num));
                     currentIndex += Num.length();
                 } else {
                     // we have incorrect delimiter
-                    int incorrectDelimiterIndex = currentIndex;
                     String incorrectDelimiter = getDelimiter(input, currentIndex);
+                    errors.add(String.format("'%s' expected but '%s' found at position %d.", delimiter, incorrectDelimiter, currentIndex));
                     currentIndex += incorrectDelimiter.length();
                 }
             } else {
@@ -60,6 +62,22 @@ public class StringCalculator {
                     currentIndex += delimiter.length();
                 }
             }
+        }
+
+        if (!negativeNums.isEmpty()){
+            errors.add("Negative number(s) not allowed: " + negativeNums.toString().substring(1, negativeNums.toString().length()-1));
+        }
+
+        if (!errors.isEmpty()){
+            StringBuilder errorMsg = new StringBuilder();
+            Iterator<String> errorsIt = errors.iterator();
+            while(errorsIt.hasNext())
+            {
+                errorMsg.append(errorsIt.next());
+                if(errorsIt.hasNext())
+                    errorMsg.append("\n");
+            }
+            throw new Exception(errorMsg.toString());
         }
 
         for (int n: nums){
