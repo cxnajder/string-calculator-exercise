@@ -1,7 +1,5 @@
 package StringCalculatorPackage;
 
-import java.util.ArrayList;
-
 public class StringCalculator {
     public static int Add(String numbers) throws Exception{
         if (numbers.isEmpty()){
