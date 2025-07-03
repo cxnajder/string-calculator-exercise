@@ -28,29 +28,30 @@ public class StringCalculator {
         int currentIndex = 0;
         int delimiterIndex = 0;
         ArrayList<String> errors = new ArrayList<String>();
+        boolean negativeNumberFound = false;
 
         while(currentIndex < input.length()) {
             delimiterIndex = input.indexOf(delimiter, currentIndex);
             if (input.charAt(currentIndex) == '-') {
                 // we have a negative number
+                negativeNumberFound = true;
                 sb.append(input.charAt(currentIndex));
                 ++currentIndex;
-                if (Character.isDigit(input.charAt(currentIndex))) {
-                    while(currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))) {
-                        sb.append(input.charAt(currentIndex));
-                        ++currentIndex;
-                    }
-                    negativeNums.add(Integer.parseInt(sb.toString()));
-                    sb = new StringBuilder();
-                }
             } else {
-                while (currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))) {
-                    sb.append(input.charAt(currentIndex));
-                    ++currentIndex;
-                }
-                nums.add(Integer.parseInt(sb.toString()));
-                sb = new StringBuilder();
+                negativeNumberFound = false;
             }
+
+            while(currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))) {
+                sb.append(input.charAt(currentIndex));
+                ++currentIndex;
+            }
+            if (negativeNumberFound) {
+                negativeNums.add(Integer.parseInt(sb.toString()));
+            } else {
+                nums.add(Integer.parseInt(sb.toString()));
+            }
+            sb = new StringBuilder();
+
             if (currentIndex < input.length() && currentIndex != delimiterIndex) {
                 // There is an incorrect delimiter
                 int incorrectDelimiterIndex = currentIndex;
