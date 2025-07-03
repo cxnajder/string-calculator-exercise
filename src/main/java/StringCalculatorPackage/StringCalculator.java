@@ -89,6 +89,8 @@ public class StringCalculator {
         }
 
         for (int n: nums){
+            if(n > 1000)
+                continue;
             sum += n;
         }
         return sum;
