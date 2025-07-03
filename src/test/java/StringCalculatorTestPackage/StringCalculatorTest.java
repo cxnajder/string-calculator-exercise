@@ -80,6 +80,11 @@ public class StringCalculatorTest {
         Assert.assertEquals(StringCalculator.Add("//sep\n2sep5"), 7);
     }
 
+    @Test(priority=845)
+    public void handleDifferentDelimiterWithMinus() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("//sep-\n2sep-5"), 7);
+    }
+
     @Test(priority=860)
     public void handleDifferentDelimiterError() {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("//|\n1|2,3"));
@@ -95,6 +100,12 @@ public class StringCalculatorTest {
     public void negativeNumbersException1() {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,-2"));
         Assert.assertEquals(exception.getMessage(), "Negative number(s) not allowed: -2");
+    }
+
+    @Test(priority=845)
+    public void negativeNumbersExceptionWithDifferentDelimiterWithMinus() throws Exception {
+        Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("//sep-\n2sep--5"));
+        Assert.assertEquals(exception.getMessage(), "Negative number(s) not allowed: -5");
     }
 
     @Test(priority=920)
