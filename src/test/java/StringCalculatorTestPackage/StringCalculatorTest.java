@@ -108,4 +108,9 @@ public class StringCalculatorTest {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("//|\n1|2,-3"));
         Assert.assertEquals(exception.getMessage(), "Negative number(s) not allowed: -3\n'|' expected but ',' found at position 3.");
     }
+
+    @Test(priority=1000)
+    public void ignoreHigherThanThousand() throws Exception{
+        Assert.assertEquals(StringCalculator.Add("2,1001"), 2);
+    }
 }
