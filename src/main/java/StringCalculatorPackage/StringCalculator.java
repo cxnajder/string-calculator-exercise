@@ -31,36 +31,44 @@ public class StringCalculator {
 
         while(currentIndex < input.length()) {
             delimiterIndex = input.indexOf(delimiter, currentIndex);
-            if (input.charAt(currentIndex) == '-' && delimiterIndex != currentIndex) {
+            if (input.charAt(currentIndex) == '-') {
+                // we have a negative number
+                sb.append(input.charAt(currentIndex));
                 ++currentIndex;
                 if (Character.isDigit(input.charAt(currentIndex))) {
-                    // we have a negative number
-                    String Num = '-' + getNum(input, currentIndex);
-                    negativeNums.add(Integer.parseInt(Num));
-                    currentIndex += Num.length();
-                } else {
-                    // we have incorrect delimiter
-                    String incorrectDelimiter = getDelimiter(input, currentIndex);
-                    errors.add(String.format("'%s' expected but '%s' found at position %d.", delimiter, incorrectDelimiter, currentIndex));
-                    currentIndex += incorrectDelimiter.length();
+                    while(currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))){
+                        sb.append(input.charAt(currentIndex));
+                        ++currentIndex;
+                    }
+                    negativeNums.add(Integer.parseInt(sb.toString()));
+                    sb = new StringBuilder();
                 }
             } else {
-                // We assemble a number
                 while (currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))) {
                     sb.append(input.charAt(currentIndex));
                     ++currentIndex;
                 }
                 nums.add(Integer.parseInt(sb.toString()));
                 sb = new StringBuilder();
-                if (currentIndex < input.length() && currentIndex != delimiterIndex) {
-                    // There is an incorrect delimiter
-                    String incorrectDelimiter = getDelimiter(input, currentIndex);
-                    errors.add(String.format("'%s' expected but '%s' found at position %d.", delimiter, incorrectDelimiter, currentIndex));
-                    currentIndex += incorrectDelimiter.length();
+            }
+            if (currentIndex < input.length() && currentIndex != delimiterIndex) {
+                // There is an incorrect delimiter
+                int incorrectDelimiterIndex = currentIndex;
+                while (currentIndex < input.length() && !Character.isDigit(input.charAt(currentIndex))) {
+                    char c = input.charAt(currentIndex);
+                    if ((c == '-') && currentIndex + 1 < input.length() && Character.isDigit(input.charAt(currentIndex) + 1)) {
+                        // we have a negative number next
+                        break;
+                    } else {
+                        sb.append(c);
+                        ++currentIndex;
+                    }
                 }
-                else{
-                    currentIndex += delimiter.length();
-                }
+                String incorrectDelimiter = sb.toString();
+                sb = new StringBuilder();
+                errors.add(String.format("'%s' expected but '%s' found at position %d.", delimiter, incorrectDelimiter, incorrectDelimiterIndex));
+            } else {
+                currentIndex += delimiter.length();
             }
         }
 
@@ -84,24 +92,6 @@ public class StringCalculator {
             sum += n;
         }
         return sum;
-    }
-
-    private static String getNum(String input, int currentIndex){
-        StringBuilder sb = new StringBuilder();
-        while(currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))){
-            sb.append(input.charAt(currentIndex));
-            ++currentIndex;
-        }
-        return sb.toString();
-    }
-
-    private static String getDelimiter(String input, int currentIndex){
-        StringBuilder sb = new StringBuilder();
-        while(currentIndex < input.length() && !Character.isDigit(input.charAt(currentIndex))){
-            sb.append(input.charAt(currentIndex));
-            ++currentIndex;
-        }
-        return sb.toString();
     }
 
     private static void checkDelimiterAtTheEnd(String input, String delimiter) throws Exception {
