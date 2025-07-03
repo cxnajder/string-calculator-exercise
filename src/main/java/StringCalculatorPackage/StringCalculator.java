@@ -1,7 +1,7 @@
 package StringCalculatorPackage;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.ListIterator;
 
 public class StringCalculator {
 
@@ -78,11 +78,11 @@ public class StringCalculator {
 
         if (!errors.isEmpty()){
             StringBuilder errorMsg = new StringBuilder();
-            Iterator<String> errorsIt = errors.iterator();
-            while(errorsIt.hasNext())
+            ListIterator<String> errorsIt = errors.listIterator(errors.size());
+            while(errorsIt.hasPrevious())
             {
-                errorMsg.append(errorsIt.next());
-                if(errorsIt.hasNext())
+                errorMsg.append(errorsIt.previous());
+                if(errorsIt.hasPrevious())
                     errorMsg.append("\n");
             }
             throw new Exception(errorMsg.toString());
