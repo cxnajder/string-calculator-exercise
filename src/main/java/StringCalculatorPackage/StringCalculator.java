@@ -8,7 +8,7 @@ public class StringCalculator {
     static final String customDelimiterStartSign = "//";
     static final char customDelimiterEndSign = '\n';
     public static int Add(String input) throws Exception {
-        if (input.isEmpty()){
+        if (input.isEmpty()) {
             return 0;
         }
         String delimiter = ",";
@@ -36,7 +36,7 @@ public class StringCalculator {
                 sb.append(input.charAt(currentIndex));
                 ++currentIndex;
                 if (Character.isDigit(input.charAt(currentIndex))) {
-                    while(currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))){
+                    while(currentIndex < input.length() && Character.isDigit(input.charAt(currentIndex))) {
                         sb.append(input.charAt(currentIndex));
                         ++currentIndex;
                     }
@@ -72,15 +72,14 @@ public class StringCalculator {
             }
         }
 
-        if (!negativeNums.isEmpty()){
+        if (!negativeNums.isEmpty()) {
             errors.add("Negative number(s) not allowed: " + negativeNums.toString().substring(1, negativeNums.toString().length()-1));
         }
 
-        if (!errors.isEmpty()){
+        if (!errors.isEmpty()) {
             StringBuilder errorMsg = new StringBuilder();
             ListIterator<String> errorsIt = errors.listIterator(errors.size());
-            while(errorsIt.hasPrevious())
-            {
+            while(errorsIt.hasPrevious()) {
                 errorMsg.append(errorsIt.previous());
                 if(errorsIt.hasPrevious())
                     errorMsg.append("\n");
@@ -88,7 +87,7 @@ public class StringCalculator {
             throw new Exception(errorMsg.toString());
         }
 
-        for (int n: nums){
+        for (int n: nums) {
             if(n > 1000)
                 continue;
             sum += n;
@@ -102,7 +101,7 @@ public class StringCalculator {
             throw new Exception("No delimiter at the end allowed.");
     }
 
-    private static String checkCustomDelimiter(String input){
+    private static String checkCustomDelimiter(String input) {
         if (input.length() < customDelimiterStartSign.length())
             return "";
         if (!input.startsWith(customDelimiterStartSign)){
@@ -112,11 +111,11 @@ public class StringCalculator {
         return input.substring(customDelimiterStartSign.length(), indexOfCustomDelimiterEnd);
     }
 
-    private static String replaceNewLineWithDelimiters(String input, String delimeter){
+    private static String replaceNewLineWithDelimiters(String input, String delimeter) {
        return input.replace("\n", delimeter);
     }
 
-    private static String removeCustomDelimiterPrefix(String input){
+    private static String removeCustomDelimiterPrefix(String input) {
         return input.substring(input.indexOf(customDelimiterEndSign) + 1);
     }
 }

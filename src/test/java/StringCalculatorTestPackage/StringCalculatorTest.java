@@ -21,7 +21,7 @@ public class StringCalculatorTest {
         Assert.assertEquals(StringCalculator.Add("1,2"), 3);
     }
     @Test(priority=350)
-    public void ThreeNumbers() throws Exception{
+    public void ThreeNumbers() throws Exception {
         Assert.assertEquals(StringCalculator.Add("1,2,3"), 6);
     }
     @Test(priority=400)
@@ -55,12 +55,12 @@ public class StringCalculatorTest {
     }
 
     @Test(priority=700)
-    public void NoDelimiterAtTheEndExceptionTest(){
+    public void NoDelimiterAtTheEndExceptionTest() {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,2,"));
     }
 
     @Test(priority=720)
-    public void NoDelimiterAtTheEndExceptionWithMessage(){
+    public void NoDelimiterAtTheEndExceptionWithMessage() {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,2,"));
         Assert.assertEquals(exception.getMessage(), "No delimiter at the end allowed.");
     }
@@ -81,36 +81,36 @@ public class StringCalculatorTest {
     }
 
     @Test(priority=860)
-    public void handleDifferentDelimiterError(){
+    public void handleDifferentDelimiterError() {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("//|\n1|2,3"));
     }
 
     @Test(priority=870)
-    public void handleDifferentDelimiterErrorWithMessage(){
+    public void handleDifferentDelimiterErrorWithMessage() {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("//|\n1|2,3"));
         Assert.assertEquals(exception.getMessage(), "'|' expected but ',' found at position 3.");
     }
 
     @Test(priority=900)
-    public void negativeNumbersException1(){
+    public void negativeNumbersException1() {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("1,-2"));
         Assert.assertEquals(exception.getMessage(), "Negative number(s) not allowed: -2");
     }
 
     @Test(priority=920)
-    public void negativeNumbersException2(){
+    public void negativeNumbersException2() {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("2,-4,-9"));
         Assert.assertEquals(exception.getMessage(), "Negative number(s) not allowed: -4, -9");
     }
 
     @Test(priority=950)
-    public void multipleErrorsTest(){
+    public void multipleErrorsTest() {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("//|\n1|2,-3"));
         Assert.assertEquals(exception.getMessage(), "Negative number(s) not allowed: -3\n'|' expected but ',' found at position 3.");
     }
 
     @Test(priority=1000)
-    public void ignoreHigherThanThousand() throws Exception{
+    public void ignoreHigherThanThousand() throws Exception {
         Assert.assertEquals(StringCalculator.Add("2,1001"), 2);
     }
 }
