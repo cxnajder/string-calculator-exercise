@@ -108,9 +108,18 @@ public class StringCalculatorTest {
         Exception exception = Assert.expectThrows(Exception.class, () -> StringCalculator.Add("//|\n1|2,-3"));
         Assert.assertEquals(exception.getMessage(), "Negative number(s) not allowed: -3\n'|' expected but ',' found at position 3.");
     }
+    @Test(priority=999)
+    public void DoNotIgnoreLessThanThousand999() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("2,999"), 1001);
+    }
 
     @Test(priority=1000)
-    public void ignoreHigherThanThousand() throws Exception {
+    public void DoNotIgnoreLessThanThousand1000() throws Exception {
+        Assert.assertEquals(StringCalculator.Add("2,1000"), 1002);
+    }
+
+    @Test(priority=1001)
+    public void IgnoreHigherThanThousand1001() throws Exception {
         Assert.assertEquals(StringCalculator.Add("2,1001"), 2);
     }
 }
