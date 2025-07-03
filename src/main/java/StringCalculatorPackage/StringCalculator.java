@@ -56,7 +56,7 @@ public class StringCalculator {
                 int incorrectDelimiterIndex = currentIndex;
                 while (currentIndex < input.length() && !Character.isDigit(input.charAt(currentIndex))) {
                     char c = input.charAt(currentIndex);
-                    if ((c == '-') && currentIndex + 1 < input.length() && Character.isDigit(input.charAt(currentIndex) + 1)) {
+                    if ((c == '-') && currentIndex + 1 < input.length() && Character.isDigit(input.charAt(currentIndex + 1))) {
                         // we have a negative number next
                         break;
                     } else {
